@@ -4,6 +4,7 @@
 import {
     eventSource,
     event_types,
+    toastr,
     messageFormatting,
     chat,                     // 用于访问聊天记录
     clearChat,                // 用于清空聊天
@@ -648,13 +649,13 @@ async function handleEditNote(favId) {
 async function handleClearInvalidFavorites() {
     const chatMetadata = ensureFavoritesArrayExists();
     if (!chatMetadata || !Array.isArray(chatMetadata.favorites) || !chatMetadata.favorites.length) {
-        await callGenericPopup('当前没有收藏项可清理。', POPUP_TYPE.TEXT);
+        toastr.info('当前没有收藏项可清理。');
         return;
     }
 
     const context = getContext();
     if (!context || !context.chat) {
-         await callGenericPopup('无法获取当前聊天信息以清理收藏。', POPUP_TYPE.ERROR);
+         toastr.error('无法获取当前聊天信息以清理收藏。');
          return;
     }
 
@@ -684,7 +685,7 @@ async function handleClearInvalidFavorites() {
     });
 
     if (invalidFavoritesIds.length === 0) {
-        await callGenericPopup('没有找到无效的收藏项。', POPUP_TYPE.TEXT);
+        toastr.info('没有找到无效的收藏项。');
         return;
     }
 
@@ -697,7 +698,7 @@ async function handleClearInvalidFavorites() {
         chatMetadata.favorites = validFavorites; // 直接用有效列表替换
         saveMetadataDebounced(); // 保存更改
 
-        await callGenericPopup(`已成功清理 ${invalidFavoritesIds.length} 条无效收藏。`, POPUP_TYPE.TEXT);
+        toastr.success(`已成功清理 ${invalidFavoritesIds.length} 条无效收藏。`);
         updateFavoritesPopup(); // 更新弹窗
     }
 }
@@ -739,7 +740,7 @@ async function handlePreviewButtonClick() {
         // 检查是否有角色或群组被选中
         if (!context.groupId && context.characterId === undefined) {
             console.error(`${pluginName}: 错误: 没有选择角色或群组`);
-            await callGenericPopup('请先选择一个角色或群组', POPUP_TYPE.ERROR);
+            toastr.error('请先选择一个角色或群组');
             return;
         }
 
@@ -749,7 +750,7 @@ async function handlePreviewButtonClick() {
         // 获取收藏项列表
         const chatMetadata = ensureFavoritesArrayExists();
         if (!chatMetadata || !Array.isArray(chatMetadata.favorites) || chatMetadata.favorites.length === 0) {
-            await callGenericPopup('没有收藏的消息可以预览', POPUP_TYPE.WARNING);
+            toastr.warning('没有收藏的消息可以预览');
             return;
         }
         
@@ -901,11 +902,11 @@ async function handlePreviewButtonClick() {
         }
         
         // 显示成功消息
-        await callGenericPopup(`已在预览聊天中显示 ${addedCount} 条收藏消息`, POPUP_TYPE.SUCCESS);
+        toastr.success(`已在预览聊天中显示 ${addedCount} 条收藏消息`);
         
     } catch (error) {
         console.error(`${pluginName}: 执行预览过程中发生错误:`, error);
-        await callGenericPopup('创建预览聊天或填充消息时出错，请查看控制台', POPUP_TYPE.ERROR);
+        toastr.error('创建预览聊天或填充消息时出错，请查看控制台');
     }
 }
 
