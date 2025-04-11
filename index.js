@@ -4,7 +4,6 @@
 import {
     eventSource,
     event_types,
-    toastr,
     messageFormatting,
     chat,                     // 用于访问聊天记录
     clearChat,                // 用于清空聊天
