@@ -902,11 +902,11 @@ async function handlePreviewButtonClick() {
         }
         
         // 显示成功消息
-        toastr.success(`已在预览聊天中显示 ${addedCount} 条收藏消息`);
+        await callGenericPopup(`已在预览聊天中显示 ${addedCount} 条收藏消息`, POPUP_TYPE.SUCCESS);
         
     } catch (error) {
         console.error(`${pluginName}: 执行预览过程中发生错误:`, error);
-        toastr.error('创建预览聊天或填充消息时出错，请查看控制台');
+        await callGenericPopup('创建预览聊天或填充消息时出错，请查看控制台', POPUP_TYPE.ERROR);
     }
 }
 
