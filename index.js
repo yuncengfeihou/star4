@@ -9,7 +9,6 @@ import {
     clearChat,                // 用于清空聊天
     doNewChat,                // 用于创建新聊天
     openCharacterChat,        // 用于打开角色聊天
-    toastr,                   // 用于消息提示
     renameChat                // 用于重命名聊天
 } from '../../../../script.js';
 
