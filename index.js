@@ -11,6 +11,7 @@ import {
     this_chid,
     clearChat,
     doNewChat,
+    saveSettingsDebounced,
     renameChat,
     // 可能需要 chatGptApi.getChatList() 或类似方法获取聊天列表来检查预览聊天是否存在
 } from '../../../../script.js';
@@ -22,7 +23,6 @@ import {
     renderExtensionTemplateAsync,
     extension_settings,
     saveMetadataDebounced, // 用于保存 chatMetadata.favorites
-    saveSettingsDebounced // <--- 新增：假设可以导入全局设置保存函数，用于保存 previewChats 映射
 } from '../../../extensions.js';
 
 import {
