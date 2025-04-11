@@ -126,8 +126,8 @@ function addFavorite(messageInfo) {
 
     console.log(`${pluginName}: Added favorite:`, item);
 
-    // Update the popup if it's open
-    if (favoritesPopup && favoritesPopup.isVisible()) {
+    // 修改这里：使用正确的方法检查弹窗是否可见
+    if (favoritesPopup && favoritesPopup.dlg && favoritesPopup.dlg.hasAttribute('open')) {
         updateFavoritesPopup();
     }
 }
